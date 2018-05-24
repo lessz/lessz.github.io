@@ -3,7 +3,7 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
   <meta name="keyword" content="hexo-theme, vuejs">
   
     <link rel="shortcut icon" href="/css/images/logo.png">
@@ -71,6 +71,18 @@
       
         <li class="list-item">
           
+            <a href="/tags/篮球" class="item-link">篮球</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/美食" class="item-link">美食</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
             <a href="/tags/" class="item-link">标签</a>
           
         </li>
@@ -93,6 +105,18 @@
           <li class="menu-item">
             
               <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/篮球" class="menu-link">篮球</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/美食" class="menu-link">美食</a>
             
           </li>
         
@@ -132,7 +156,11 @@
 <h2 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h2><h3 id="环境变量Path-或者-直接使用-git-bash-exe"><a href="#环境变量Path-或者-直接使用-git-bash-exe" class="headerlink" title="环境变量Path 或者 直接使用 git-bash.exe"></a>环境变量Path 或者 直接使用 <em>git-bash.exe</em></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">D:\Program Files\Git\cmd</span><br></pre></td></tr></table></figure>
 <h3 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h3><h4 id="简单命令"><a href="#简单命令" class="headerlink" title="简单命令"></a>简单命令</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 版本查看</span><br><span class="line">$ git --version</span><br><span class="line">git version <span class="number">2</span>.<span class="number">17</span>.<span class="number">0</span>.windows.<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h4 id="新建代码库"><a href="#新建代码库" class="headerlink" title="新建代码库"></a>新建代码库</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 在当前目录新建一个Git代码库</span><br><span class="line">$ git init</span><br><span class="line"></span><br><span class="line"># 新建一个目录，将其初始化Git代码库</span><br><span class="line">$ git init [project-name]</span><br><span class="line"></span><br><span class="line"># 下载一个项目和它的整个代码历史</span><br><span class="line">$ git clone [url]</span><br></pre></td></tr></table></figure>
-<h2 id="Git原理"><a href="#Git原理" class="headerlink" title="Git原理"></a>Git原理</h2><p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="Git工作原理图"><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Workspace：工作区</span><br><span class="line">Index / Stage：暂存区</span><br><span class="line">Repository：仓库区（或本地仓库）</span><br><span class="line">Remote：远程仓库</span><br></pre></td></tr></table></figure></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 显示当前Git配置</span><br><span class="line">$ git config --list</span><br><span class="line"></span><br><span class="line"># 编辑Git配置文件</span><br><span class="line">$ git config -e [--global]</span><br><span class="line"></span><br><span class="line"># 设置提交代码时的用户信息</span><br><span class="line">$ git config [--global] user.name "[name]"</span><br><span class="line">$ git config [--global] user.email "[email address]"</span><br></pre></td></tr></table></figure>
+<h4 id="增加删除文件"><a href="#增加删除文件" class="headerlink" title="增加删除文件"></a>增加删除文件</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 添加指定文件到暂存区</span><br><span class="line">$ git add [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 添加指定目录到暂存区，包括子目录</span><br><span class="line">$ git add [<span class="built_in">dir</span>]</span><br><span class="line"></span><br><span class="line"># 删除工作区文件，并且将这次删除放入暂存区</span><br><span class="line">$ git rm [file1] [file2]</span><br><span class="line"></span><br><span class="line"># 停止追踪指定文件，但该文件会保留在工作区</span><br><span class="line">$ git rm -cached [file]</span><br><span class="line"></span><br><span class="line"># 改名文件，并且将这个改名放入暂存区</span><br><span class="line">$ git mv [file-original] [file-renamed]</span><br></pre></td></tr></table></figure>
+<h4 id="代码提交"><a href="#代码提交" class="headerlink" title="代码提交"></a>代码提交</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 提交暂存区到仓库区</span><br><span class="line">$ git commit -m [message]</span><br><span class="line"></span><br><span class="line"># 提交暂存区的指定文件到仓库区</span><br><span class="line">$ git commit [file1] [file2] ... -m [message]</span><br><span class="line"></span><br><span class="line"># 提交工作区自上次commit之后的变化，直接到仓库</span><br><span class="line">$ git commit -a </span><br><span class="line"></span><br><span class="line"># 提交时显示所有diff信息</span><br><span class="line">$ git commit -v </span><br><span class="line"></span><br><span class="line"># 使用一次新的commit，代替上一次提交</span><br><span class="line"># 如果代码没有任何变化，则用来改写上一次commit的提交信息</span><br><span class="line">$ git commit --amend -m [message]</span><br><span class="line"></span><br><span class="line"># 重做上一次commit, 并包括指定文件的新变化</span><br><span class="line">$ git commit --amend [file1] [file2]</span><br></pre></td></tr></table></figure>
+<h4 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"># 列出所有本地分支</span><br><span class="line">$ git branch</span><br><span class="line"></span><br><span class="line"># 列出所有远程分支</span><br><span class="line">$ git branch -r</span><br><span class="line"></span><br><span class="line"># 列出所有本地分支和远程分支</span><br><span class="line">$ git branch -a</span><br><span class="line"></span><br><span class="line"># 新建一个分支，但依然停留在当前分支</span><br><span class="line">$ git branch [branch-name]</span><br><span class="line"></span><br><span class="line"># 新建一个分支，并切换到该分支</span><br><span class="line">$ git checkout -b [branch]</span><br><span class="line"></span><br><span class="line"># 新建一个分支，指向指定commit</span><br><span class="line">$ git branch [branch] [commit]</span><br><span class="line"></span><br><span class="line"># 新建一个分，与指定的远程分支建立追踪关系</span><br><span class="line">$ git branch --track [branch] [remote-branch]</span><br><span class="line"></span><br><span class="line"># 切换到指定分支，并更新工作区</span><br><span class="line">$ git checkout [branch-name]</span><br><span class="line"></span><br><span class="line"># 切换到上一个分支</span><br><span class="line">$ git checkout -</span><br><span class="line"></span><br><span class="line"># 建立追踪关系，在现有分支与指定的远程分支之间</span><br><span class="line">$ git branch --<span class="built_in">set</span>-upstream [branch] [remote-branch]</span><br><span class="line"></span><br><span class="line"># 合并指定分支到当前分支</span><br><span class="line">$ git merge [branch]</span><br><span class="line"></span><br><span class="line"># 选择一个commit，合并进当前分支</span><br><span class="line">$ git cherry-pick [commit]</span><br><span class="line"></span><br><span class="line"># 删除分支</span><br><span class="line">$ git branch -d [branch-name]</span><br><span class="line"></span><br><span class="line">$ 删除远程分支</span><br><span class="line">$ git push origin -delete [branch-name]</span><br><span class="line">$ git branch -dr [remote/branch]</span><br></pre></td></tr></table></figure>
+<h2 id="Git原理"><a href="#Git原理" class="headerlink" title="Git原理"></a>Git原理</h2><p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="Git工作原理图"><br><figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">Workspace：工作区</span><br><span class="line"><span class="keyword">Index</span> / Stage：暂存区</span><br><span class="line">Repository：仓库区（或本地仓库）</span><br><span class="line">Remote：远程仓库</span><br></pre></td></tr></table></figure></p>
 <h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://www.cnblogs.com/chenwolong/p/GIT.html" target="_blank" rel="noopener">阮一峰常用 Git 命令清单</a></p>
 </section>
     <!-- Tags START -->
@@ -164,6 +192,13 @@
       </a>
     
     
+      <a class="nav-right" href="/2018/05/24/Hexo如何工作/">
+        
+          Hexo工作原理
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
   </div>
 
     <!-- NAV END -->
@@ -187,9 +222,9 @@
   
     <aside class="catalog-container">
   <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
+    <strong class="toc-title">目录</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#下载安装"><span class="toc-nav-text">下载安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境变量配置"><span class="toc-nav-text">环境变量配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境变量Path-或者-直接使用-git-bash-exe"><span class="toc-nav-text">环境变量Path 或者 直接使用 git-bash.exe</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Git常用命令"><span class="toc-nav-text">Git常用命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#简单命令"><span class="toc-nav-text">简单命令</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新建代码库"><span class="toc-nav-text">新建代码库</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Git原理"><span class="toc-nav-text">Git原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#相关链接"><span class="toc-nav-text">相关链接</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#下载安装"><span class="toc-nav-text">下载安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境变量配置"><span class="toc-nav-text">环境变量配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境变量Path-或者-直接使用-git-bash-exe"><span class="toc-nav-text">环境变量Path 或者 直接使用 git-bash.exe</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Git常用命令"><span class="toc-nav-text">Git常用命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#简单命令"><span class="toc-nav-text">简单命令</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新建代码库"><span class="toc-nav-text">新建代码库</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#配置"><span class="toc-nav-text">配置</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#增加删除文件"><span class="toc-nav-text">增加删除文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码提交"><span class="toc-nav-text">代码提交</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分支"><span class="toc-nav-text">分支</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Git原理"><span class="toc-nav-text">Git原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#相关链接"><span class="toc-nav-text">相关链接</span></a></li></ol>
     
   </div>
 </aside>

@@ -382,6 +382,7 @@ h2.article-head {
   width: 100%;
   margin-top: 30px;
   margin-right: 30px;
+  cursor: pointer;
 }
 @media screen and (min-width: 980px) {
   .page__post {
@@ -764,6 +765,7 @@ h2.article-head {
   width: 100%;
   z-index: 200;
   transition: background 0.5s;
+  height: 55px;
 }
 .fixed-header {
   position: fixed;
@@ -876,6 +878,7 @@ h2.article-head {
 .open {
   max-height: 300px;
   transition-delay: 0.1s;
+  margin-top: 5px;
 }
 .menu-list {
   padding: 0;

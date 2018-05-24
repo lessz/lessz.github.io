@@ -10,7 +10,7 @@
   
   <title>
     
-      Void
+      国际庄美食榜 | Void
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,76 +138,161 @@
 </header>
 
     <div id="article-banner">
-  <h2>Tags</h2>
-  <p class="post-date">windows<span>(1)</span></p>
+  <h2>国际庄美食榜</h2>
+  <p class="post-date">2018-05-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
 </div>
-<main class="page__container page__main page__tag_container">
-  <div class="page__content">
-  <div class="page__posts clearfix">
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"></section>
+    <!-- Tags START -->
     
-      <div class="page__post">
-        <article itemscope itemtype="http://schema.org/Article" class="page__mini-article">
-          <div class="mini-article__cover">
-            
-            <img itemprop="image" src="https://git-scm.com/images/trygit.png" alt="Windows Git安装环境配置">
-            <div itemprop="datePublished" content="" class="mini-article__date"><span class="date__day">23</span>
-            <span class="date__month">五月</span></div>
-            <a itemprop="url" class="fa fa-share" href="/2018/05/23/Windows Git安装环境配置/"></a>
-          </div>
-          <div class="mini-article__info">
-            <h3 itemprop="name" class="mini-article__title"><a itemprop="url" href="/2018/05/23/Windows Git安装环境配置/" title="Windows Git安装环境配置">Windows Git安装环境配置</a></h3>
-            <p class="mini-article__author">
-              by <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-                <a itemprop="url" href="" target="_blank">
-                  <span itemprop="name">
-                    
-                      Zhao Xiao Dan
-                    
-                  </span>
-                </a>
-              </span>
-            </p>
-            <p itemprop="articleSection" class="min-article__desc">
-世上无难事只怕有心人！
-下载安装
-从Git官网下载Windows安装包，官网地址 点我
-参考https://blog.csdn.net/dietime1943/article/details/71751007安装
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags/石家庄/" >
+    <span class="tag-code">石家庄</span>
+  </a>
 
-环境变量配置环境变量Path 或者 直接使用 git-bash.exeD: ...</p>
-            
-            <div class="min-article__tags">
-              <i class="fa fa-tags"></i>
-              <ul class="tags__list clearfix">
-                
-                <li class="tags__item" ><a href="/tags/windows/" class="tag-code">windows</a></li>
-                
-                <li class="tags__item" ><a href="/tags/git/" class="tag-code">git</a></li>
-                
-              </ul>
-            </div>
-          </div>
-        </article>
+  <a href="/tags/国际庄/" >
+    <span class="tag-code">国际庄</span>
+  </a>
+
+  <a href="/tags/美食/" >
+    <span class="tag-code">美食</span>
+  </a>
+
       </div>
     
-  </div>
-  <div class="page__paginator">
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/05/24/国际庄篮球场收集/">
+        <span class="nav-arrow">← </span>
+        
+          国际庄篮球场征集令
+        
+      </a>
+    
     
   </div>
-</div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="nav">无</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
 </main>
 
 <script>
   (function () {
-    var url = 'http://localhost:4000/tags/windows/index.html'
-    $('#article-banner').geopattern(url)
+    var url = 'http://localhost:4000/2018/05/24/国际庄美食榜/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
     $('.header').removeClass('fixed-header')
 
-    var tag = location.hash.replace('#', '')
-    if (tag) {
-      var tagId = "#tag-" + tag;
-      $("html, body").animate({
-        scrollTop: $(tagId).offset().top 
-      }, 400)
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "国际庄美食榜",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
     }
   })();
 </script>
