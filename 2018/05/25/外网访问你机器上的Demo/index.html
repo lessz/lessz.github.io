@@ -10,7 +10,7 @@
   
   <title>
     
-      Hello World | Void
+      外网访问你机器上的Demo | Void
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -114,8 +114,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Hello World</h2>
-  <p class="post-date">2018-05-22</p>
+  <h2>外网访问你机器上的Demo</h2>
+  <p class="post-date">2018-05-25</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -123,23 +123,35 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &quot;My New Post&quot;</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <section class="markdown-content"><p>想在外网访问你机器上的demo? </p>
+<h2 id="几个内网端口映射服务网站"><a href="#几个内网端口映射服务网站" class="headerlink" title="几个内网端口映射服务网站"></a>几个内网端口映射服务网站</h2><ul>
+<li><a href="http://wendal.cn" target="_blank" rel="noopener">http://wendal.cn</a><ul>
+<li>Nutz社区提供的ngrok服务，详细访问 <a href="https://nutz.cn/yvr/t/33b68q9106imspallbj4c6aa0p" target="_blank" rel="noopener">https://nutz.cn/yvr/t/33b68q9106imspallbj4c6aa0p</a></li>
+</ul>
+</li>
+<li><a href="http://www.mofasuidao.cn/" target="_blank" rel="noopener">http://www.mofasuidao.cn/</a><ul>
+<li>拥有魔法隧道，让你穿越世界，引领「内网穿透」潮流，为世界带来美好的改变</li>
+</ul>
+</li>
+<li><a href="http://natapp.cn/" target="_blank" rel="noopener">http://natapp.cn/</a></li>
+<li><a href="http://ngrok.io" target="_blank" rel="noopener">http://ngrok.io</a> == <a href="http://ngrok.com" target="_blank" rel="noopener">http://ngrok.com</a></li>
+<li><a href="http://ngrok.2bdata.com/" target="_blank" rel="noopener">http://ngrok.2bdata.com/</a></li>
+<li><a href="http://www.ngrok.cc/" target="_blank" rel="noopener">http://www.ngrok.cc/</a></li>
+<li><a href="http://www.nat123.com/" target="_blank" rel="noopener">http://www.nat123.com/</a></li>
+</ul>
+<h2 id="ngrok使用"><a href="#ngrok使用" class="headerlink" title="ngrok使用"></a>ngrok使用</h2><ol>
+<li>下载ngrok,<a href="https://github.com/binarywang/weixin-java-mp-demo-springboot/tree/master/ngrok" target="_blank" rel="noopener">点我</a></li>
+<li>打开shell或cmd，进入ngrok目录，运行 <code>ngrok -config ngrok.cfg -subdomain my-domain 8080</code> 如果运行失败，请更换my-domain为其它字符串，直至连接成功；</li>
+<li>外网访问地址：<a href="http://my-domain.tunnel.qydev.com/" target="_blank" rel="noopener">http://my-domain.tunnel.qydev.com/</a> （注意my-domain要跟上面的一致）；</li>
+</ol>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags/Hexo/" >
-    <span class="tag-code">Hexo</span>
+  <a href="/tags/代理/" >
+    <span class="tag-code">代理</span>
   </a>
 
       </div>
@@ -150,10 +162,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-    
-      <a class="nav-right" href="/2018/05/23/Hexo搭建博客/">
+      <a class="nav-left" href="/2018/05/25/计划/">
+        <span class="nav-arrow">← </span>
         
-          Hexo搭建博客
+          计划
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/05/26/微信公共账号（一）/">
+        
+          微信公共账号（一）
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -183,7 +202,7 @@
   <div class="toc-main">
     <strong class="toc-title">目录</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Quick-Start"><span class="toc-nav-text">Quick Start</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Create-a-new-post"><span class="toc-nav-text">Create a new post</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Run-server"><span class="toc-nav-text">Run server</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Generate-static-files"><span class="toc-nav-text">Generate static files</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Deploy-to-remote-sites"><span class="toc-nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#几个内网端口映射服务网站"><span class="toc-nav-text">几个内网端口映射服务网站</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ngrok使用"><span class="toc-nav-text">ngrok使用</span></a></li></ol>
     
   </div>
 </aside>
@@ -193,7 +212,7 @@
 
 <script>
   (function () {
-    var url = 'http://localhost:4000/2018/05/22/hello-world/';
+    var url = 'http://localhost:4000/2018/05/25/外网访问你机器上的Demo/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -249,7 +268,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Hello World",
+        id: "外网访问你机器上的Demo",
         owner: "",
         repo: "",
         oauth: {

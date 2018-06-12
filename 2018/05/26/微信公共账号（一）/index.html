@@ -10,7 +10,7 @@
   
   <title>
     
-      Hello World | Void
+      微信公共账号（一） | Void
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -114,8 +114,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Hello World</h2>
-  <p class="post-date">2018-05-22</p>
+  <h2>微信公共账号（一）</h2>
+  <p class="post-date">2018-05-26</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -123,23 +123,42 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &quot;My New Post&quot;</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <section class="markdown-content"><p><img src="http://m1.sinaimg.cn/maxwidth.640/m1.sinaimg.cn/d6dce9a99ba3725ea55823ec1d3363dd_640_457.jpg" alt=""></p>
+<blockquote>
+<p>订目标，做计划，大量的行动。——陈安之<br>言之易，行之难。——吕不韦</p>
+</blockquote>
+<h2 id="相关文档、工具"><a href="#相关文档、工具" class="headerlink" title="相关文档、工具"></a>相关文档、工具</h2><ol>
+<li><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1445241432" target="_blank" rel="noopener">微信公众平台技术文档官网</a></li>
+<li><a href="https://github.com/Wechat-Group/weixin-java-tools" target="_blank" rel="noopener">微信Java开发工具包 weixin-java-tools</a></li>
+<li><a href="https://github.com/Wechat-Group/weixin-java-tools/blob/master/demo.md" target="_blank" rel="noopener">weixin-java-tools Demo</a></li>
+<li><a href="/2018/05/25/外网访问你机器上的Demo/">微信服务号本地调试,参考<em>外网访问你机器上的Demo</em></a></li>
+</ol>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="AES加密时的-java-security-InvalidKeyException-Illegal-key-size-异常"><a href="#AES加密时的-java-security-InvalidKeyException-Illegal-key-size-异常" class="headerlink" title="AES加密时的 java.security.InvalidKeyException: Illegal key size 异常"></a>AES加密时的 java.security.InvalidKeyException: Illegal key size 异常</h3><p>程序代码<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置加密模式为AES的CBC模式</span></span><br><span class="line">Cipher cipher = Cipher.getInstance(<span class="string">"AES/CBC/NoPadding"</span>);</span><br><span class="line">SecretKeySpec keySpec = <span class="keyword">new</span> SecretKeySpec(aesKey, <span class="string">"AES"</span>);</span><br><span class="line">IvParameterSpec iv = <span class="keyword">new</span> IvParameterSpec(aesKey, <span class="number">0</span>, <span class="number">16</span>);</span><br><span class="line">cipher.init(Cipher.ENCRYPT_MODE, keySpec, iv);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密</span></span><br><span class="line"><span class="keyword">byte</span>[] encrypted = cipher.doFinal(unencrypted);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>当执行到<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">cipher.init(Cipher.ENCRYPT_MODE, keySpec, iv);</span><br></pre></td></tr></table></figure></p>
+<p>时, 如果密钥大于128, 会抛出java.security.InvalidKeyException: Illegal key size 异常.<br>因为密钥长度是受限制的, java运行时环境读到的是受限的policy文件. 文件位于${java_home}/jre/lib/security, 这种限制是因为美国对软件出口的控制.</p>
+<p>处理办法: 在官方网站下载JCE无限制权限策略文件</p>
+<p>JDK6的下载地址: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html</a><br>JDK7的下载地址: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html</a><br>JDK8的下载地址: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a><br>下载后解压，可以看到local_policy.jar和US_export_policy.jar以及readme.txt<br>如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件<br>如果安装了JDK，还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件</p>
+<p><strong>更多问题参考</strong><a href="https://github.com/wechat-group/weixin-java-tools/wiki" target="_blank" rel="noopener">weixin-java-tools微信Java SDK开发文档</a></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags/Hexo/" >
-    <span class="tag-code">Hexo</span>
+  <a href="/tags/spring-boot/" >
+    <span class="tag-code">spring boot</span>
+  </a>
+
+  <a href="/tags/maven/" >
+    <span class="tag-code">maven</span>
+  </a>
+
+  <a href="/tags/微信公共号/" >
+    <span class="tag-code">微信公共号</span>
+  </a>
+
+  <a href="/tags/java/" >
+    <span class="tag-code">java</span>
   </a>
 
       </div>
@@ -150,10 +169,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-    
-      <a class="nav-right" href="/2018/05/23/Hexo搭建博客/">
+      <a class="nav-left" href="/2018/05/25/外网访问你机器上的Demo/">
+        <span class="nav-arrow">← </span>
         
-          Hexo搭建博客
+          外网访问你机器上的Demo
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/05/30/Spring boot 系列（一）/">
+        
+          Spring boot 系列（一）
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -183,7 +209,7 @@
   <div class="toc-main">
     <strong class="toc-title">目录</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Quick-Start"><span class="toc-nav-text">Quick Start</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Create-a-new-post"><span class="toc-nav-text">Create a new post</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Run-server"><span class="toc-nav-text">Run server</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Generate-static-files"><span class="toc-nav-text">Generate static files</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Deploy-to-remote-sites"><span class="toc-nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#相关文档、工具"><span class="toc-nav-text">相关文档、工具</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题"><span class="toc-nav-text">问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AES加密时的-java-security-InvalidKeyException-Illegal-key-size-异常"><span class="toc-nav-text">AES加密时的 java.security.InvalidKeyException: Illegal key size 异常</span></a></li></ol></li></ol>
     
   </div>
 </aside>
@@ -193,7 +219,7 @@
 
 <script>
   (function () {
-    var url = 'http://localhost:4000/2018/05/22/hello-world/';
+    var url = 'http://localhost:4000/2018/05/26/微信公共账号（一）/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -249,7 +275,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Hello World",
+        id: "微信公共账号（一）",
         owner: "",
         repo: "",
         oauth: {

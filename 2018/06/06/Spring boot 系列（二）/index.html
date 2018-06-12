@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Spring boot 系列（二） | Void
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo" style="display:none;"></div>
+      <span>Void</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Spring boot 系列（二）</h2>
+  <p class="post-date">2018-06-06</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="实现功能说明"><a href="#实现功能说明" class="headerlink" title="实现功能说明"></a>实现功能说明</h2><p>文件上传，并支持展示上传文件</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><ol>
+<li>报错信息</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">org.springframework.web.multipart.MultipartException: </span><br><span class="line">Could not parse multipart servlet request; </span><br><span class="line">nested exception is java.io.IOException: </span><br><span class="line">The temporary upload location [/tmp/tomcat.2737591724424319502.8080/work/Tomcat/localhost/ROOT] is not valid</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>报错代码 : file.transferTo 方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">storeScale</span><span class="params">(MultipartFile file, String basePath, <span class="keyword">int</span> maxWidth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	validateFile(file);</span><br><span class="line"></span><br><span class="line">	String root = getRoot();</span><br><span class="line"></span><br><span class="line">	String path = FileNameUtils.genPathAndFileName(getExt(file.getOriginalFilename()));</span><br><span class="line"></span><br><span class="line">	File temp = <span class="keyword">new</span> File(root + appContext.getTempDir() + path);</span><br><span class="line">	checkDirAndCreate(temp);</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		file.transferTo(temp);</span><br><span class="line">		<span class="comment">// 根据临时文件生成略缩图</span></span><br><span class="line">		String dest = root + basePath + path;</span><br><span class="line">		ImageUtils.scaleImageByWidth(temp.getAbsolutePath(), dest, maxWidth);</span><br><span class="line"></span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		<span class="keyword">throw</span> e;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		temp.delete();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> basePath + path;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ol>
+<li>上面源码文件使用路径 ，相对路径, 预期路径应该是 <strong>root + appContext.getTempDir() + path</strong> ，但是报错却是一个系统临时文件路径 （Tomcat的）</li>
+<li><p>其次，由于transferTo方法报错，应该是写文件的时候报错，跟踪源码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Spring MultipartHttpServletRequest adapter, wrapping a Servlet 3.0 HttpServletRequest</span></span><br><span class="line"><span class="comment"> * and its Part objects. Parameters get exposed through the native request's getParameter</span></span><br><span class="line"><span class="comment"> * methods - without any custom processing on our side.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Juergen Hoeller</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rossen Stoyanchev</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 3.1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardMultipartHttpServletRequest</span> <span class="keyword">extends</span> <span class="title">AbstractMultipartHttpServletRequest</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transferTo</span><span class="params">(File dest)</span> <span class="keyword">throws</span> IOException, IllegalStateException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.part.write(dest.getPath()); <span class="comment">// 写文件方法入口</span></span><br><span class="line">        <span class="keyword">if</span> (dest.isAbsolute() &amp;&amp; !dest.exists()) &#123;</span><br><span class="line">            <span class="comment">// Servlet 3.0 Part.write is not guaranteed to support absolute file paths:</span></span><br><span class="line">            <span class="comment">// may translate the given path to a relative location within a temp dir</span></span><br><span class="line">            <span class="comment">// (e.g. on Jetty whereas Tomcat and Undertow detect absolute paths).</span></span><br><span class="line">            <span class="comment">// At least we offloaded the file from memory storage; it'll get deleted</span></span><br><span class="line">            <span class="comment">// from the temp dir eventually in any case. And for our user's purposes,</span></span><br><span class="line">            <span class="comment">// we can manually copy it to the requested location as a fallback.</span></span><br><span class="line">            FileCopyUtils.copy(<span class="keyword">this</span>.part.getInputStream(), <span class="keyword">new</span> FileOutputStream(dest));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Adaptor to allow &#123;<span class="doctag">@link</span> FileItem&#125; objects generated by the package renamed</span></span><br><span class="line"><span class="comment"> * commons-upload to be used by the Servlet 3.0 upload API that expects</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> Part&#125;s.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationPart</span> <span class="keyword">implements</span> <span class="title">Part</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(String fileName)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">        <span class="keyword">if</span> (!file.isAbsolute()) &#123; <span class="comment">// 此处判断如果不是绝对路径，则会添加location</span></span><br><span class="line">            file = <span class="keyword">new</span> File(location, fileName);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fileItem.write(file);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>源码一目了然，使用Servlet3.0的支持的上传文件功能时，如果我们没有使用绝对路径的话，transferTo方法会在相对路径前添加一个location路径，即：<strong>file = new File(location, fileName);</strong>。当然，这也影响了SpringMVC的Multipartfile的使用</p>
+</li>
+</ol>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>使用绝对路径</li>
+<li>指定临时文件location路径<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 文件上传临时路径</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="function">MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      MultipartConfigFactory factory = <span class="keyword">new</span> MultipartConfigFactory();</span><br><span class="line">      String location = appContext.getRoot(); </span><br><span class="line">      File file = <span class="keyword">new</span> File(location);</span><br><span class="line">      <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">      	file.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line">      factory.setLocation(location);</span><br><span class="line">      <span class="keyword">return</span> factory.createMultipartConfig();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * appContext.getRoot() 文件存放路径</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">      registry.addResourceHandler(<span class="string">"/store/**"</span>).addResourceLocations(<span class="string">"file:"</span> + appContext.getRoot() + <span class="string">"/store/"</span>);</span><br><span class="line">      <span class="keyword">super</span>.addResourceHandlers(registry);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>文章参考：<a href="https://blog.csdn.net/daniel7443/article/details/51620308" target="_blank" rel="noopener">https://blog.csdn.net/daniel7443/article/details/51620308</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags/spring-boot/" >
+    <span class="tag-code">spring boot</span>
+  </a>
+
+  <a href="/tags/文件上传/" >
+    <span class="tag-code">文件上传</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/05/30/eclipse-maven/">
+        <span class="nav-arrow">← </span>
+        
+          org.apache.maven.archiver.MavenArchiver.getManifest错误
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/06/06/Spring boot 系列（三）/">
+        
+          Spring boot 系列（三）
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#实现功能说明"><span class="toc-nav-text">实现功能说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题描述"><span class="toc-nav-text">问题描述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题分析"><span class="toc-nav-text">问题分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解决方法"><span class="toc-nav-text">解决方法</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/2018/06/06/Spring boot 系列（二）/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Spring boot 系列（二）",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="#">Void</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

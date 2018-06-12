@@ -65,7 +65,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">首页</a>
+            <a href="/" class="item-link">首页</a>
           
         </li>
       
@@ -92,7 +92,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">首页</a>
+              <a href="/" class="menu-link">首页</a>
             
           </li>
         
@@ -113,7 +113,11 @@
   </div>
 </header>
 
-    <main class="page__container page__main">
+    <div id="article-banner">
+  <h2>Tags</h2>
+  <p class="post-date">spring boot<span>(5)</span></p>
+</div>
+<main class="page__container page__main page__tag_container">
   <div class="page__content">
   <div class="page__posts clearfix">
     
@@ -247,45 +251,6 @@ org.springframework.web.multipart.MultipartException: Could not parse multipart 
         <article itemscope itemtype="http://schema.org/Article" class="page__mini-article">
           <div class="mini-article__cover">
             
-            <img itemprop="image" src="https://www.eclipse.org/downloads/assets/public/images/logo-eclipse.png" alt="org.apache.maven.archiver.MavenArchiver.getManifest错误">
-            <div itemprop="datePublished" content="" class="mini-article__date"><span class="date__day">30</span>
-            <span class="date__month">五月</span></div>
-            <a itemprop="url" class="fa fa-share" href="/2018/05/30/eclipse-maven/"></a>
-          </div>
-          <div class="mini-article__info">
-            <h3 itemprop="name" class="mini-article__title"><a itemprop="url" href="/2018/05/30/eclipse-maven/" title="org.apache.maven.archiver.MavenArchiver.getManifest错误">org.apache.maven.archiver.MavenArchiver.getManifest错误</a></h3>
-            <p class="mini-article__author">
-              by <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-                <a itemprop="url" href="" target="_blank">
-                  <span itemprop="name">
-                    
-                      Zhao Xiao Dan
-                    
-                  </span>
-                </a>
-              </span>
-            </p>
-            <p itemprop="articleSection" class="min-article__desc">在给eclipse换了高版本的maven插件后，引入jar包报如下的错误：org.apache.maven.archiver.MavenArchiver.getManifest(org.apache.maven.project
-解决方法是：help–&gt;install new softw ...</p>
-            
-            <div class="min-article__tags">
-              <i class="fa fa-tags"></i>
-              <ul class="tags__list clearfix">
-                
-                <li class="tags__item" ><a href="/tags/eclipse/" class="tag-code">eclipse</a></li>
-                
-                <li class="tags__item" ><a href="/tags/maven/" class="tag-code">maven</a></li>
-                
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    
-      <div class="page__post">
-        <article itemscope itemtype="http://schema.org/Article" class="page__mini-article">
-          <div class="mini-article__cover">
-            
             <img itemprop="image" src="http://www.qingpingshan.com/uploads/allimg/170131/12064W116-0.png" alt="Spring boot 系列（一）">
             <div itemprop="datePublished" content="" class="mini-article__date"><span class="date__day">30</span>
             <span class="date__month">五月</span></div>
@@ -373,141 +338,25 @@ weixin-java-tools Demo
   </div>
   <div class="page__paginator">
     
-      <div class="guide-pager">
-  
-    <a class="unvisible" href="/"><span class="page-arrow">←</span> Prev</a>
-  
-  
-    <a href="/page/2/">Next<span class="page-arrow"> →</span></a>
-  
-</div>
-    
   </div>
 </div>
-  
-  <aside class="page__sidebar">
-  <form id="page-search-from" class="page__search-from" action="/search/">
-    <label class="search-form__item">
-      <input class="input ins-search-input search-form-input" type="text" name="search" placeholder="Search...">
-      <i class="fa fa-search"></i>
-    </label>
-  </form>
-  <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
-
-  <div class="sidebar__block">
-    <h3 class="block__title">简介</h3>
-    <p class="block__text">有志者、事竟成，破釜沉舟，百二秦关终属楚；苦心人、天不负，卧薪尝胆，三千越甲可吞吴。</p>
-  </div>
-
-  
-
-  <div class="sidebar__block">
-    <h3 class="block__title">最新文章</h3>
-    <ul class="block-list latest-post-list">
-      
-      <li class="latest-post-item">
-        <a href="/2018/06/07/Spring boot 系列（四）/" title="Spring boot 系列（四）">
-          <div class="item__cover">
-            
-            <img src="http://www.qingpingshan.com/uploads/allimg/170131/12064W116-0.png" alt="Spring boot 系列（四）"></div>
-            <div class="item__info">
-            <h3 class="item__title">Spring boot 系列（四）</h3>
-            <span class="item__text">2018-06-07</span>
-          </div>
-        </a>
-      </li>
-      
-      <li class="latest-post-item">
-        <a href="/2018/06/06/Spring boot 系列（三）/" title="Spring boot 系列（三）">
-          <div class="item__cover">
-            
-            <img src="http://www.qingpingshan.com/uploads/allimg/170131/12064W116-0.png" alt="Spring boot 系列（三）"></div>
-            <div class="item__info">
-            <h3 class="item__title">Spring boot 系列（三）</h3>
-            <span class="item__text">2018-06-06</span>
-          </div>
-        </a>
-      </li>
-      
-      <li class="latest-post-item">
-        <a href="/2018/06/06/Spring boot 系列（二）/" title="Spring boot 系列（二）">
-          <div class="item__cover">
-            
-            <img src="http://www.qingpingshan.com/uploads/allimg/170131/12064W116-0.png" alt="Spring boot 系列（二）"></div>
-            <div class="item__info">
-            <h3 class="item__title">Spring boot 系列（二）</h3>
-            <span class="item__text">2018-06-06</span>
-          </div>
-        </a>
-      </li>
-      
-    </ul>
-  </div>
-  <div class="sidebar__block">
-    <h3 class="block__title">标签</h3>
-    <ul class="block-list tag-list clearfix">
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/Hexo/">Hexo</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/spring-boot/">spring boot</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/filter/">filter</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/shiro/">shiro</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/tomcat部署/">tomcat部署</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/代理/">代理</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/windows/">windows</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/git/">git</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/eclipse/">eclipse</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/maven/">maven</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/文件上传/">文件上传</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/微信公共号/">微信公共号</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/java/">java</a></li>
-    
-      <li class="tag-item"><a class="tag-link" href="/tags/计划/">计划</a></li>
-    
-    </ul>
-  </div>
-</aside>
 </main>
 
+<script>
+  (function () {
+    var url = 'http://localhost:4000/tags/spring-boot/index.html'
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+    var tag = location.hash.replace('#', '')
+    if (tag) {
+      var tagId = "#tag-" + tag;
+      $("html, body").animate({
+        scrollTop: $(tagId).offset().top 
+      }, 400)
+    }
+  })();
+</script>
 
     <div class="scroll-top">
   <span class="arrow-icon"></span>
