@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      GoLang | Void
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo" style="display:none;"></div>
+      <span>Void</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>GoLang</h2>
+  <p class="post-date">2018-06-19</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="一、下载安装"><a href="#一、下载安装" class="headerlink" title="一、下载安装"></a>一、下载安装</h2><p>下载对应操作系统的版本并安装，下载地址：<a href="http://www.golangtc.com/download，" target="_blank" rel="noopener">http://www.golangtc.com/download，</a> 譬如这里下载的是 go1.6beta1.windows-amd64.msi。</p>
+<h2 id="二、Windows下环境配置"><a href="#二、Windows下环境配置" class="headerlink" title="二、Windows下环境配置"></a>二、Windows下环境配置</h2><ol>
+<li><p>GOROOT golang安装后的根目录，windows下默认为c:\go\，安装过程中会由安装程序自动写入系统环境变量中。</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">GOROOT: D:\<span class="function"><span class="keyword">Program</span></span> Files\Go\</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GOBIN golang安装后根目录下的bin目录，即$GOROOT\bin\，windows平台下默认为c:\go\bin，安装过程中会由安装程序自动添加到PATH环境变量中。</p>
+<figure class="highlight mel"><table><tr><td class="code"><pre><span class="line">GOBIN: %GOROOT%\bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GOPATH golang的工作目录，是用来设置包加载路径的重要变量，也是go get和go install工具将会使用的目录。GOPATH变量可以同时制定多个目录，这些目录在Mac和Linux系统上通过:分隔，而在windows系统上通过;分隔。在大部分情况下都将是第一个路径优先。</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="string">GOPATH:</span> <span class="string">D:</span>\golang\workspace\</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开cmd，运行go version命令，如果看到下面信息说明环境变量配置成功。</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">Administrator</span>&gt;<span class="title">go</span> <span class="title">version</span></span></span><br><span class="line"><span class="function"><span class="title">go</span> <span class="title">version</span> <span class="title">go1</span>.9.2 <span class="title">windows</span>/<span class="title">amd64</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="三、LiteIDE安装"><a href="#三、LiteIDE安装" class="headerlink" title="三、LiteIDE安装"></a>三、LiteIDE安装</h2><ol>
+<li><p>下载windows版本，下载地址：<a href="http://www.golangtc.com/download/liteide。" target="_blank" rel="noopener">http://www.golangtc.com/download/liteide。</a></p>
+</li>
+<li><p>将liteidex28.windows-qt4.zip解压到本地即可，例如：c:\liteide\。</p>
+</li>
+<li><p>检查LiteIDE环境变量：工具栏选择切换当前环境<strong>win64</strong>,让后 查看 =&gt; 编辑当前环境 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># native compiler windows amd64</span><br><span class="line"></span><br><span class="line">GOROOT=D:\Program Files\Go</span><br><span class="line">#GOBIN=</span><br><span class="line">GOARCH=amd64</span><br><span class="line">GOOS=windows</span><br><span class="line">CGO_ENABLED=1</span><br><span class="line"></span><br><span class="line">PATH=D:\golang\mingw64\bin;%GOROOT%\bin;%PATH%</span><br><span class="line"></span><br><span class="line">LITEIDE_GDB=gdb64</span><br><span class="line">LITEIDE_MAKE=mingw32-make</span><br><span class="line">LITEIDE_TERM=%COMSPEC%</span><br><span class="line">LITEIDE_TERMARGS=</span><br><span class="line">LITEIDE_EXEC=%COMSPEC%</span><br><span class="line">LITEIDE_EXECOPT=/C</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="四、MinGW-w64-GCC-toolchains安装"><a href="#四、MinGW-w64-GCC-toolchains安装" class="headerlink" title="四、MinGW-w64 GCC toolchains安装"></a>四、MinGW-w64 GCC toolchains安装</h2><p>在LiteIDE上调试golang需要安装gdb，windows上则可使用MinGW-w64。LiteIDE的环境变量LITEIDE_GDB可以指定使用哪一个gdb来执行调试：在windows上，32位环境使用gdb.exe，64位环境使用gdb64.exe。在环境配置文件中可对这个环境变量进行手工配置。</p>
+<ol>
+<li>下载MinGW GCC toolchains，下载地址：<a href="http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/rubenvb/gcc-4.8-release/" target="_blank" rel="noopener">http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/rubenvb/gcc-4.8-release/</a></li>
+<li>将x86_64-w64-mingw32-gcc-4.8.0-win64_rubenvb.7z解压到本地即可，例如：D:\golang\mingw64\。</li>
+<li>检查修改LiteIDE环境变量：查看(V) =&gt; 编辑当前环境<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># native compiler windows amd64</span><br><span class="line"></span><br><span class="line">GOROOT=D:\Program Files\Go</span><br><span class="line">#GOBIN=</span><br><span class="line">GOARCH=amd64</span><br><span class="line">GOOS=windows</span><br><span class="line">CGO_ENABLED=1</span><br><span class="line"></span><br><span class="line">PATH=D:\golang\mingw64\bin;%GOROOT%\bin;%PATH%</span><br><span class="line"></span><br><span class="line">LITEIDE_GDB=gdb64</span><br><span class="line">LITEIDE_MAKE=mingw32-make</span><br><span class="line">LITEIDE_TERM=%COMSPEC%</span><br><span class="line">LITEIDE_TERMARGS=</span><br><span class="line">LITEIDE_EXEC=%COMSPEC%</span><br><span class="line">LITEIDE_EXECOPT=/C</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="五、GOPATH-设置"><a href="#五、GOPATH-设置" class="headerlink" title="五、GOPATH 设置"></a>五、GOPATH 设置</h2><p>查看 → 管理 GOPATH…，我们这里就使用安装 Go 时设置的那个 GOPATH</p>
+<h2 id="六、新建项目"><a href="#六、新建项目" class="headerlink" title="六、新建项目"></a>六、新建项目</h2><p>Ctrl + N 打开新项目或文件对话框，GOPATH 选择上一步的那个，模板选择 Go1 Command Project，最后取个名字，比如 test：<br><img src="https://img-blog.csdn.net/20160119182919995" alt=""><br>点击 OK，test 项目已建立：<br><img src="https://img-blog.csdn.net/20160119182943214" alt=""><br>完整测试代码：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test project main.go</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> i <span class="keyword">int</span> = <span class="number">20</span></span><br><span class="line">	i += <span class="number">30</span></span><br><span class="line">	j := i + <span class="number">10</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(j)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="七、设置编译选项并编译"><a href="#七、设置编译选项并编译" class="headerlink" title="七、设置编译选项并编译"></a>七、设置编译选项并编译</h2><p>编译 → 编译配置，BUILDARGS 设置为 -gcflags “-N -l”，以去掉编译优化，方便调试：<br><img src="https://img-blog.csdn.net/20160119183137224" alt=""></p>
+<h2 id="八、项目调试"><a href="#八、项目调试" class="headerlink" title="八、项目调试"></a>八、项目调试</h2><p>按 F5 启动调试，程序在 main 函数处停止：<br>按 F10 （逐过程）进行单步调试，注意变量 i、j 值的变化：<br>按 F11 （逐语句）</p>
+<p>参考文章<br><a href="https://studygolang.com/articles/5805" target="_blank" rel="noopener">golang环境搭建</a><br><a href="https://blog.csdn.net/defonds/article/details/50544208" target="_blank" rel="noopener">Windows 平台下 LiteIDE 的安装和使用</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags/GoLang/" >
+    <span class="tag-code">GoLang</span>
+  </a>
+
+  <a href="/tags/环境配置/" >
+    <span class="tag-code">环境配置</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/06/19/设计模式/">
+        <span class="nav-arrow">← </span>
+        
+          设计模式
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/06/19/设计模式-工厂模式/">
+        
+          设计模式-工厂模式
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一、下载安装"><span class="toc-nav-text">一、下载安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二、Windows下环境配置"><span class="toc-nav-text">二、Windows下环境配置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三、LiteIDE安装"><span class="toc-nav-text">三、LiteIDE安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四、MinGW-w64-GCC-toolchains安装"><span class="toc-nav-text">四、MinGW-w64 GCC toolchains安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#五、GOPATH-设置"><span class="toc-nav-text">五、GOPATH 设置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#六、新建项目"><span class="toc-nav-text">六、新建项目</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#七、设置编译选项并编译"><span class="toc-nav-text">七、设置编译选项并编译</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#八、项目调试"><span class="toc-nav-text">八、项目调试</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/2018/06/19/GoLang/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "GoLang",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="#">Void</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

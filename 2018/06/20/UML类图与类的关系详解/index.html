@@ -10,7 +10,7 @@
   
   <title>
     
-      org.apache.maven.archiver.MavenArchiver.getManifest错误 | Void
+      UML类图与类的关系详解 | Void
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -114,8 +114,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>org.apache.maven.archiver.MavenArchiver.getManifest错误</h2>
-  <p class="post-date">2018-05-30</p>
+  <h2>UML类图与类的关系详解</h2>
+  <p class="post-date">2018-06-20</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -123,22 +123,58 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>在给eclipse换了高版本的maven插件后，引入jar包报如下的错误：<br>org.apache.maven.archiver.MavenArchiver.getManifest(org.apache.maven.project</p>
-<p>解决方法是：help–&gt;install new software, 然后add，添加如下链接，</p>
-<p><a href="http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-mavenarchiver/0.17.2/N/LATEST/" target="_blank" rel="noopener">http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-mavenarchiver/0.17.2/N/LATEST/</a></p>
-<p>一直下一步就可以，后面提示重启eclipse，然后重启eclipse后，右击项目，点击maven–&gt;update project， 错误就没了</p>
+    <section class="markdown-content"><p>虚线箭头指向依赖；</p>
+<p>实线箭头指向关联；</p>
+<p>虚线三角指向接口；</p>
+<p>实线三角指向父类；</p>
+<p>空心菱形能分离而独立存在，是聚合；</p>
+<p>实心菱形精密关联不可分，是组合；</p>
+<p><img src="//upload-images.jianshu.io/upload_images/2799767-3f16972d7b062110.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>上面是UML的语法。</p>
+<p>在画类图的时候，理清类和类之间的关系是重点。类的关系有泛化(Generalization)、实现（Realization）、依赖(Dependency)和关联(Association)。其中关联又分为一般关联关系和聚合关系(Aggregation)，合成关系(Composition)。下面我们结合实例理解这些关系。</p>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>类图（Class Diagram）: 类图是面向对象系统建模中最常用和最重要的图，是定义其它图的基础。类图主要是用来显示系统中的类、接口以及它们之间的静态结构和关系的一种静态模型。</p>
+<p>类图的3个基本组件：类名、属性、方法。 </p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122095942008-522706800.png" alt=""></p>
+<p>泛化(generalization)：表示is-a的关系，是对象之间耦合度最大的一种关系，子类继承父类的所有细节。直接使用语言中的继承表达。在类图中使用带三角箭头的实线表示，箭头从子类指向父类。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100109586-1582026693.jpg" alt=""></p>
+<p>实现（Realization）:在类图中就是接口和实现的关系。这个没什么好讲的。在类图中使用带三角箭头的虚线表示，箭头从实现类指向接口。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100200290-1946335228.jpg" alt=""></p>
+<p>依赖(Dependency)：对象之间最弱的一种关联方式，是临时性的关联。代码中一般指由局部变量、函数参数、返回值建立的对于其他对象的调用关系。一个类调用被依赖类中的某些方法而得以完成这个类的一些职责。在类图使用带箭头的虚线表示，箭头从使用类指向被依赖的类。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100240086-1421148234.jpg" alt=""></p>
+<p>关联(Association) : 对象之间一种引用关系，比如客户类与订单类之间的关系。这种关系通常使用类的属性表达。关联又分为一般关联、聚合关联与组合关联。后两种在后面分析。在类图使用带箭头的实线表示，箭头从使用类指向被关联的类。可以是单向和双向。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100316165-918518126.jpg" alt=""></p>
+<p>聚合(Aggregation) : 表示has-a的关系，是一种不稳定的包含关系。较强于一般关联,有整体与局部的关系,并且没有了整体,局部也可单独存在。如公司和员工的关系，公司包含员工，但如果公司倒闭，员工依然可以换公司。在类图使用空心的菱形表示，菱形从局部指向整体。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100444118-201115809.jpg" alt=""></p>
+<p>组合(Composition) : 表示contains-a的关系，是一种强烈的包含关系。组合类负责被组合类的生命周期。是一种更强的聚合关系。部分不能脱离整体存在。如公司和部门的关系，没有了公司，部门也不能存在了；调查问卷中问题和选项的关系；订单和订单选项的关系。在类图使用实心的菱形表示，菱形从局部指向整体。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100524696-522581923.jpg" alt=""></p>
+<p>多重性(Multiplicity) : 通常在关联、聚合、组合中使用。就是代表有多少个关联对象存在。使用数字..星号（数字）表示。如下图，一个割接通知可以关联0个到N个故障单。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100557102-897123625.jpg" alt=""></p>
+<h4 id="聚合和组合的区别"><a href="#聚合和组合的区别" class="headerlink" title="聚合和组合的区别"></a>聚合和组合的区别</h4><p>这两个比较难理解，重点说一下。聚合和组合的区别在于：聚合关系是“has-a”关系，组合关系是“contains-a”关系；聚合关系表示整体与部分的关系比较弱，而组合比较强；聚合关系中代表部分事物的对象与代表聚合事物的对象的生存期无关，一旦删除了聚合对象不一定就删除了代表部分事物的对象。组合中一旦删除了组合对象，同时也就删除了代表部分事物的对象。 </p>
+<h4 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h4><p>联通客户响应OSS。系统有故障单、业务开通、资源核查、割接、业务重保、网络品质性能等功能模块。现在我们抽出部分需求做为例子讲解。</p>
+<p>大家可以参照着类图，好好理解。 </p>
+<p><img src="https://images2017.cnblogs.com/blog/1071603/201711/1071603-20171122100652024-377146516.jpg" alt=""></p>
+<p>1． 通知分为一般通知、割接通知、重保通知。这个是继承关系。</p>
+<p>2． NoticeService和实现类NoticeServiceImpl是实现关系。</p>
+<p>3． NoticeServiceImpl通过save方法的参数引用Notice,是依赖关系。同时调用了BaseDao完成功能，也是依赖关系。</p>
+<p>4． 割接通知和故障单之间通过中间类(通知电路)关联，是一般关联。</p>
+<p>5． 重保通知和预案库间是聚合关系。因为预案库可以事先录入，和重保通知没有必然联系，可以独立存在。在系统中是手工从列表中选择。删除重保通知，不影响预案。</p>
+<p>6． 割接通知和需求单之间是聚合关系。同理，需求单可以独立于割接通知存在。也就是说删除割接通知，不影响需求单。</p>
+<p>7． 通知和回复是组合关系。因为回复不能独立于通知存在。也就是说删除通知，该条通知对应的回复也要级联删除。</p>
+<p>经过以上的分析，相信大家对类的关系已经有比较好的理解了。大家有什么其它想法或好的见解，欢迎拍砖。</p>
+<p>PS：还是那句话：以上类图用Enterprise Architect 7.5所画，在此推荐一下EA,非常不错。可以替代Visio和Rose了。Visio功能不够强大，Rose太重。唯有EA比较合适。 </p>
+<p>本文完全转载自<a href="http://www.uml.org.cn/oobject/201104212.asp" target="_blank" rel="noopener">http://www.uml.org.cn/oobject/201104212.asp</a></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags/maven/" >
-    <span class="tag-code">maven</span>
+  <a href="/tags/类图/" >
+    <span class="tag-code">类图</span>
   </a>
 
-  <a href="/tags/eclipse/" >
-    <span class="tag-code">eclipse</span>
+  <a href="/tags/UML/" >
+    <span class="tag-code">UML</span>
   </a>
 
       </div>
@@ -149,17 +185,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/05/30/Spring boot 系列（一）/">
+      <a class="nav-left" href="/2018/06/19/设计模式-工厂模式/">
         <span class="nav-arrow">← </span>
         
-          Spring boot 系列（一）相关文档
+          设计模式-工厂模式
         
       </a>
     
     
-      <a class="nav-right" href="/2018/06/06/Spring boot 系列（二）/">
+      <a class="nav-right" href="/2018/06/20/JVM内存模型/">
         
-          Spring boot 系列（二）文件上传
+          JVM内存模型
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -189,7 +225,7 @@
   <div class="toc-main">
     <strong class="toc-title">目录</strong>
     
-      <ol class="nav">无</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#基本概念"><span class="toc-nav-text">基本概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#聚合和组合的区别"><span class="toc-nav-text">聚合和组合的区别</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实例分析"><span class="toc-nav-text">实例分析</span></a></li></ol></li></ol></li></ol></li></ol>
     
   </div>
 </aside>
@@ -199,7 +235,7 @@
 
 <script>
   (function () {
-    var url = 'http://localhost:4000/2018/05/30/eclipse-maven/';
+    var url = 'http://localhost:4000/2018/06/20/UML类图与类的关系详解/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -255,7 +291,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "org.apache.maven.archiver.MavenArchiver.getManifest错误",
+        id: "UML类图与类的关系详解",
         owner: "",
         repo: "",
         oauth: {
