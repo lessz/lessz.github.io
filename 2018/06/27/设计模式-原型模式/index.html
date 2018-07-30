@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      设计模式-原型模式 | Void
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo" style="display:none;"></div>
+      <span>Void</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>设计模式-原型模式</h2>
+  <p class="post-date">2018-06-27</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-原型模式的定义："><a href="#1-原型模式的定义：" class="headerlink" title="1. 原型模式的定义："></a>1. 原型模式的定义：</h2><p>　　原型模式：使用原型实例指定待创建对象的类型，并且通过复制这个原型来创建新的对象。</p>
+<h2 id="2-原型模式的结构："><a href="#2-原型模式的结构：" class="headerlink" title="2. 原型模式的结构："></a>2. 原型模式的结构：</h2><p>　　原型模式主要包含3个角色：</p>
+<p>　　　　<img src="https://images2015.cnblogs.com/blog/723909/201509/723909-20150913172532590-618965482.png" alt=""></p>
+<p>　　　　（1）Prototype(抽象原型类)：声明克隆方法的接口，是所有具体原型类的公共父类，它可是抽象类也可以是接口，甚至可以是具体实现类。</p>
+<p>　　　　（2）ConcretePrototype(具体原型类)：它实现抽象原型类中声明的克隆方法，在克隆方法中返回自己的一个克隆对象。</p>
+<p>　　　　（3）Client(客户端)：在客户类中，让一个原型对象克隆自身从而创建一个新的对象。</p>
+<p>深克隆与浅克隆：</p>
+<p>　　　　浅克隆：当原型对象被复制时，只复制它本身和其中包含的值类型的成员变量，而引用类型的成员变量并没有复制。</p>
+<p>　　　　<img src="https://images2015.cnblogs.com/blog/723909/201509/723909-20150913172705153-199579334.png" alt=""></p>
+<p>　　　　深克隆：除了对象本身被复制外，对象所包含的所有成员变量也将被复制。</p>
+<p>　　　　<img src="https://images2015.cnblogs.com/blog/723909/201509/723909-20150913172736528-542408431.png" alt=""></p>
+<h2 id="3-原型模式的实现："><a href="#3-原型模式的实现：" class="headerlink" title="3. 原型模式的实现："></a>3. 原型模式的实现：</h2><p>　　在使用某OA系统时，有些岗位的员工发现他们每周的工作都大同小异，因此在填写工作周报时很多内容都是重复的，为了提高工作周报的创建效率，大家迫切地希望有一种机制能够快速创建相同或者相似的周报，包括创建周报的附件。试使用原型模式对该OA系统中的工作周报创建模块进行改进。</p>
+<p>　　<img src="https://images2015.cnblogs.com/blog/723909/201509/723909-20150913173515106-1499079031.jpg" alt=""></p>
+<p>　　代码如下：</p>
+<p>　　WeeklyLog：周报类<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeeklyLog</span></span></span><br><span class="line"><span class="class">    </span>&#123; <span class="keyword">public</span> Attachment Attachment &#123; get; set; &#125; <span class="keyword">public</span> string Name &#123; get; set; &#125; <span class="keyword">public</span> string Date &#123; get; set; &#125; <span class="keyword">public</span> string Content &#123; get; set; &#125; <span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">        <span class="comment">/// 使用MemberwiseClone()实现浅克隆 /// &lt;/summary&gt;</span></span><br><span class="line">        <span class="comment">/// &lt;returns&gt;&lt;/returns&gt;</span></span><br><span class="line">        <span class="comment">//public WeeklyLog Clone() //&#123; // return (WeeklyLog)this.MemberwiseClone(); //&#125; //使用序列化的方式实现深克隆</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> WeeklyLog <span class="title">Clone</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            WeeklyLog clone = <span class="keyword">null</span>;</span><br><span class="line">            FileStream fs = <span class="keyword">new</span> FileStream(<span class="string">"temp.dat"</span>, FileMode.Create);</span><br><span class="line">            BinaryFormatter formatter = <span class="keyword">new</span> BinaryFormatter(); <span class="keyword">try</span> &#123;</span><br><span class="line">                formatter.Serialize(fs, <span class="keyword">this</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SerializationException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">"Failed to Serialize . Reason :"</span> + e.Message); <span class="keyword">throw</span>;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                fs.Close();</span><br><span class="line">            &#125;</span><br><span class="line">            FileStream fs1 = <span class="keyword">new</span> FileStream(<span class="string">"temp.dat"</span>, FileMode.Open);</span><br><span class="line">            BinaryFormatter formatter1 = <span class="keyword">new</span> BinaryFormatter(); <span class="keyword">try</span> &#123;</span><br><span class="line">                clone = (WeeklyLog)formatter.Deserialize(fs1);<span class="comment">//反序列化</span></span><br><span class="line"> &#125; <span class="keyword">catch</span> (SerializationException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">"Failed to deserialize. Reasion:"</span> + e.Message); <span class="keyword">throw</span>;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                fs1.Close();</span><br><span class="line">            &#125; <span class="keyword">return</span> clone;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　Attachmeht:附件类<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Attachment</span></span></span><br><span class="line"><span class="class">    </span>&#123; <span class="keyword">public</span> string Name &#123; get; set; &#125; <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dowmload</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            Console.WriteLine(<span class="string">"下载附件，文件名为&#123;0&#125;"</span>, Name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span><span class="params">(string\[\] args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    WeeklyLog log, log_new;</span><br><span class="line">    log = <span class="keyword">new</span> WeeklyLog();</span><br><span class="line">    Attachment attchment = <span class="keyword">new</span> Attachment();</span><br><span class="line">    log.Attachment = attchment;</span><br><span class="line">    log_new = log.Clone();</span><br><span class="line">    System.Console.WriteLine(<span class="string">"周报是否相同?&#123;0&#125;"</span>,log==log_new ? <span class="string">"是"</span>:<span class="string">"否"</span>);</span><br><span class="line">    System.Console.WriteLine(<span class="string">"附件是否相同？&#123;0&#125;"</span>,log.Attachment == log_new.Attachment ? <span class="string">"是"</span>:<span class="string">"否"</span>);</span><br><span class="line">    System.Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原型管理器：</p>
+<p>　　将多个原型对象存储在一个集合中供客户端使用，它是一个专门负责克隆对象的工厂，其中定义了一个集合用于存储原型对象，如果需要某个原型对象的一个克隆，可以通过复制集合中对应的原型对象来获得。</p>
+<p>　　<img src="https://images2015.cnblogs.com/blog/723909/201509/723909-20150913175853856-481185417.png" alt=""></p>
+<p>　　代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeManager</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    Hashtable ht = <span class="keyword">new</span> Hashtable(); <span class="function"><span class="keyword">public</span> <span class="title">PrototypeManager</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ht.Add(<span class="string">"A"</span>, <span class="keyword">new</span> ConcretePrototypeA());</span><br><span class="line">        ht.Add(<span class="string">"B"</span>, <span class="keyword">new</span> ConcretePrototypeB());</span><br><span class="line">    &#125; <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(string key, Prototype prototype)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ht.Add(key, prototype);</span><br><span class="line">    &#125; <span class="function"><span class="keyword">public</span> Prototype <span class="title">Get</span><span class="params">(string key)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Prototype clone = <span class="keyword">null</span>;</span><br><span class="line">        clone = ((Prototype)ht\[key\]).Clone(); <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Prototype</span></span></span><br><span class="line"><span class="class"></span>&#123; <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Prototype <span class="title">Clone</span><span class="params">()</span></span>;</span><br><span class="line">&#125; public class ConcretePrototypeA : Prototype</span><br><span class="line">&#123; <span class="function"><span class="keyword">public</span> override Prototype <span class="title">Clone</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> (ConcretePrototypeA)<span class="keyword">this</span>.MemberwiseClone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; public class ConcretePrototypeB : Prototype</span><br><span class="line">&#123; <span class="function"><span class="keyword">public</span> override Prototype <span class="title">Clone</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> (ConcretePrototypeB)<span class="keyword">this</span>.MemberwiseClone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在实际开发当中，可以将PrototypeManager设计为单例模式，确保系统中有且只有一个PrototypeManager对象，有利于节省系统资源，还可以更好的对原型管理器对象进行控制。。。。</p>
+<h2 id="4-原型模式的优缺点："><a href="#4-原型模式的优缺点：" class="headerlink" title="4. 原型模式的优缺点："></a>4. 原型模式的优缺点：</h2><p>　　优点：（1）：当创建对象的实例较为复杂的时候，使用原型模式可以简化对象的创建过程，通过复制一个已有的实例可以提高实例的创建效率。</p>
+<p>　　　　　（2）：扩展性好，由于原型模式提供了抽象原型类，在客户端针对抽象原型类进行编程，而将具体原型类写到配置文件中，增减或减少产品对原有系统都没有影响。</p>
+<p>　　　　　（3）：原型模式提供了简化的创建结构，工厂方法模式常常需要有一个与产品类等级结构相同的工厂等级结构，而原型模式不需要这样，圆形模式中产品的复制是通过封装在类中的克隆方法实现的，无需专门的工厂类来创建产品。</p>
+<p>　　　　　（4）：可以使用深克隆方式保存对象的状态，使用原型模式将对象复制一份并将其状态保存起来，以便在需要的时候使用(例如恢复到历史某一状态)，可辅助实现撤销操作。</p>
+<p>　　缺点：（1）：需要为每一个类配置一个克隆方法，而且该克隆方法位于类的内部，当对已有类进行改造的时候，需要修改代码，违反了开闭原则。</p>
+<p>　　　　　（2）：在实现深克隆时需要编写较为复杂的代码，而且当对象之间存在多重签到引用时，为了实现深克隆，每一层对象对应的类都必须支持深克隆，实现起来会比较麻烦。</p>
+<h2 id="5-原型模式的适用环境："><a href="#5-原型模式的适用环境：" class="headerlink" title="5. 原型模式的适用环境："></a>5. 原型模式的适用环境：</h2><p>　　1：创建新对象成本较大（例如初始化时间长，占用CPU多或占太多网络资源），新对象可以通过复制已有对象来获得，如果相似对象，则可以对其成员变量稍作修改。</p>
+<p>　　2：系统要保存对象的状态，而对象的状态很小。</p>
+<p>　　3：需要避免使用分层次的工厂类来创建分层次的对象，并且类的实例对象只有一个或很少的组合状态，通过复制原型对象得到新实例可以比使用构造函数创建一个新实例更加方便。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags/设计模式/" >
+    <span class="tag-code">设计模式</span>
+  </a>
+
+  <a href="/tags/原型模式/" >
+    <span class="tag-code">原型模式</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/06/25/设计模式-建造者模式/">
+        <span class="nav-arrow">← </span>
+        
+          设计模式-建造者模式
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/07/04/HashMap 实现原理/">
+        
+          HashMap 实现原理（Java 8）
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-原型模式的定义："><span class="toc-nav-text">1. 原型模式的定义：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-原型模式的结构："><span class="toc-nav-text">2. 原型模式的结构：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-原型模式的实现："><span class="toc-nav-text">3. 原型模式的实现：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-原型模式的优缺点："><span class="toc-nav-text">4. 原型模式的优缺点：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-原型模式的适用环境："><span class="toc-nav-text">5. 原型模式的适用环境：</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/2018/06/27/设计模式-原型模式/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "设计模式-原型模式",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="#">Void</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

@@ -125,7 +125,7 @@
         <article itemscope itemtype="http://schema.org/Article" class="page__mini-article">
           <div class="mini-article__cover">
             
-            <img itemprop="image" src="http://img.blog.csdn.net/20150720152805765" alt="JVM内存模型">
+            <img itemprop="image" src="/2018/06/20/JVM内存模型/JVM内存模型.png" alt="JVM内存模型">
             <div itemprop="datePublished" content="" class="mini-article__date"><span class="date__day">20</span>
             <span class="date__month">六月</span></div>
             <a itemprop="url" class="fa fa-share" href="/2018/06/20/JVM内存模型/"></a>
@@ -144,7 +144,9 @@
               </span>
             </p>
             <p itemprop="articleSection" class="min-article__desc">
-</p>
+1. 程序计数器
+程序计数器是一块较小的内存空间，它可以看做是当前线程所执行的字节码的行号指示器。
+在虚拟机概念模型（仅是概念模型，各种虚拟机可能会通过一些更高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程回复 ...</p>
             
             <div class="min-article__tags">
               <i class="fa fa-tags"></i>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      设计模式-建造者模式 | Void
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo" style="display:none;"></div>
+      <span>Void</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>设计模式-建造者模式</h2>
+  <p class="post-date">2018-06-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>建造者模式（builder），将一个复杂对象的<strong>构建</strong>与它的表示<strong>分离</strong>，使得同样的构建过程可以创建不同的<strong>表示</strong>。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>建造者模式（builder）是创建一个复杂对象的创建型模式，将构建复杂对象的过程和它的部件解耦，使得构建过程和部件的表示分离开来。<br>例如我们要DIY一个台式机电脑，我们找到DIY商家，我们可以要求这台电脑的cpu或者主板或者其他的部件都是什么牌子的什么配置的，这些部件是我们可以根据我们的需求来变化的，但是这些部件组装成电脑的过程是一样的，我们不需要知道这些部件是怎样组装成电脑的，我们只需要提供部件的牌子和配置就可以了。对于这种情况我们就可以采用建造者模式，将部件和组装过程分离，使得构建过程和部件都可以自由拓展，两者之间的耦合也降到最低。</p>
+<h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="https://img-blog.csdn.net/20160208172541284" alt=""></p>
+<ul>
+<li>Dirextor: 指挥者类，用于统一组装流程</li>
+<li>Builder：抽象Builder类，规范产品的组建，一般是由子类实现。</li>
+<li>ConcreteBulider: 抽象Builder类的实现类，实现抽象Builder类定义的所有方法，并且返回一个组建好的对象</li>
+<li>Product: 产品类</li>
+</ul>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><h3 id="1-创建产品类"><a href="#1-创建产品类" class="headerlink" title="1. 创建产品类"></a>1. 创建产品类</h3><p>我要组装一台电脑，电脑被抽象为Computer类，它有三个部件:CPU 、主板和内存。并在里面提供了三个方法分别用来设置CPU 、主板和内存：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String mCpu;</span><br><span class="line">    <span class="keyword">private</span> String mMainboard;</span><br><span class="line">    <span class="keyword">private</span> String mRam;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setmCpu</span><span class="params">(String mCpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mCpu = mCpu;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setmMainboard</span><span class="params">(String mMainboard)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mMainboard = mMainboard;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setmRam</span><span class="params">(String mRam)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mRam = mRam;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-创建Builder类规范产品的组建"><a href="#2-创建Builder类规范产品的组建" class="headerlink" title="2.创建Builder类规范产品的组建"></a>2.创建Builder类规范产品的组建</h3><p>商家组装电脑有一套组装方法的模版，就是一个抽象的Builder类,里面提供了安装CPU、主板和内存的方法，以及组装成电脑的create方法：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildCpu</span><span class="params">(String cpu)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildMainboard</span><span class="params">(String mainboard)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">(String ram)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Computer <span class="title">create</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>商家实现了抽象的Builder类，MoonComputerBuilder类用于组装电脑：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MoonComputerBuilder</span> <span class="keyword">extends</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Computer mComputer = <span class="keyword">new</span> Computer();</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCpu</span><span class="params">(String cpu)</span> </span>&#123;</span><br><span class="line">        mComputer.setmCpu(cpu);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildMainboard</span><span class="params">(String mainboard)</span> </span>&#123;</span><br><span class="line">        mComputer.setmMainboard(mainboard);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">(String ram)</span> </span>&#123;</span><br><span class="line">        mComputer.setmRam(ram);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">create</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mComputer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-用Dirextor指挥者类来统一组装过程"><a href="#3-用Dirextor指挥者类来统一组装过程" class="headerlink" title="3. 用Dirextor指挥者类来统一组装过程"></a>3. 用Dirextor指挥者类来统一组装过程</h3><p>商家的指挥者类用来规范组装电脑的流程规范，先安装主板，再安装CPU，最后安装内存并组装成电脑：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Direcror</span> </span>&#123;</span><br><span class="line">    Builder mBuild=<span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Direcror</span><span class="params">(Builder build)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mBuild=build;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">CreateComputer</span><span class="params">(String cpu,String mainboard,String ram)</span></span>&#123;</span><br><span class="line">        <span class="comment">//规范建造流程</span></span><br><span class="line">       <span class="keyword">this</span>.mBuild.buildMainboard(mainboard);</span><br><span class="line">       <span class="keyword">this</span>.mBuild.buildCpu(cpu);</span><br><span class="line">       <span class="keyword">this</span>.mBuild.buildRam(ram);</span><br><span class="line">       <span class="keyword">return</span> mBuild.create();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-客户端调用指挥者类"><a href="#4-客户端调用指挥者类" class="headerlink" title="4. 客户端调用指挥者类"></a>4. 客户端调用指挥者类</h3><p>最后商家用指挥者类组装电脑。我们只需要提供我们想要的CPU，主板和内存就可以了，至于商家怎样组装的电脑我们无需知道。</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreatComputer</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>{
+        Builder mBuilder=<span class="keyword">new</span> MoonComputerBuilder();
+        Direcror mDirecror=<span class="keyword">new</span> Direcror(mBuilder);
+        <span class="comment">//组装电脑</span>
+        mDirecror.CreateComputer(<span class="string">"i7-6700"</span>,<span class="string">"华擎玩家至尊"</span>,<span class="string">"三星DDR4"</span>);
+    }
+}
+</code></pre>
+<h2 id="使用建造者模式的场景和优缺点"><a href="#使用建造者模式的场景和优缺点" class="headerlink" title="使用建造者模式的场景和优缺点"></a>使用建造者模式的场景和优缺点</h2><h3 id="1-使用场景"><a href="#1-使用场景" class="headerlink" title="1. 使用场景"></a>1. 使用场景</h3><ul>
+<li>当创建复杂对象的算法应该独立于该对象的组成部分以及它们的装配方式时。<br>相同的方法，不同的执行顺序，产生不同的事件结果时。</li>
+<li>多个部件或零件,都可以装配到一个对象中，但是产生的运行结果又不相同时。</li>
+<li>产品类非常复杂，或者产品类中的调用顺序不同产生了不同的效能。</li>
+<li>创建一些复杂的对象时，这些对象的内部组成构件间的建造顺序是稳定的，但是对象的内部组成构件面临着复杂的变化</li>
+</ul>
+<h3 id="2-优点"><a href="#2-优点" class="headerlink" title="2. 优点"></a>2. 优点</h3><ul>
+<li>使用建造者模式可以使客户端不必知道产品内部组成的细节。</li>
+<li>具体的建造者类之间是相互独立的，容易扩展。</li>
+<li>由于具体的建造者是独立的，因此可以对建造过程逐步细化，而不对其他的模块产生任何影响。</li>
+</ul>
+<h3 id="3-缺点"><a href="#3-缺点" class="headerlink" title="3. 缺点"></a>3. 缺点</h3><ul>
+<li>产生多余的Build对象以及Dirextor类。</li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags/设计模式/" >
+    <span class="tag-code">设计模式</span>
+  </a>
+
+  <a href="/tags/建造者模式/" >
+    <span class="tag-code">建造者模式</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/06/22/JVM类加载机制/">
+        <span class="nav-arrow">← </span>
+        
+          JVM类加载机制
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/06/27/设计模式-原型模式/">
+        
+          设计模式-原型模式
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#简介"><span class="toc-nav-text">简介</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#结构图"><span class="toc-nav-text">结构图</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#简单实现"><span class="toc-nav-text">简单实现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-创建产品类"><span class="toc-nav-text">1. 创建产品类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-创建Builder类规范产品的组建"><span class="toc-nav-text">2.创建Builder类规范产品的组建</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-用Dirextor指挥者类来统一组装过程"><span class="toc-nav-text">3. 用Dirextor指挥者类来统一组装过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-客户端调用指挥者类"><span class="toc-nav-text">4. 客户端调用指挥者类</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#使用建造者模式的场景和优缺点"><span class="toc-nav-text">使用建造者模式的场景和优缺点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-使用场景"><span class="toc-nav-text">1. 使用场景</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-优点"><span class="toc-nav-text">2. 优点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-缺点"><span class="toc-nav-text">3. 缺点</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/2018/06/25/设计模式-建造者模式/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "设计模式-建造者模式",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="#">Void</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

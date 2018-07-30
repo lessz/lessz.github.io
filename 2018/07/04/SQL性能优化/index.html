@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="爱吃爱玩的程序猿，热爱生活、热爱美食、热爱运动，有理想的一笔!">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      SQL性能优化 | Void
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo" style="display:none;"></div>
+      <span>Void</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>SQL性能优化</h2>
+  <p class="post-date">2018-07-04</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="1-查询的模糊匹配"><a href="#1-查询的模糊匹配" class="headerlink" title="1.查询的模糊匹配"></a><strong>1.查询的模糊匹配</strong></h3><pre><code>尽量避免在一个复杂查询里面使用 LIKE &apos;%parm1%&apos;—— 红色标识位置的百分号会导致相关列的索引无法使用，最好不要用.  
+</code></pre><p>解决办法:<br>其实只需要对该脚本略做改进，查询速度便会提高近百倍。改进方法如下：<br>        a、修改前台程序——把查询条件的供应商名称一栏由原来的文本输入改为下拉列表，用户模糊输入供应商名称时，直接在前台就帮忙定位到具体的供应商，这样在调用后台程序时，这列就可以直接用等于来关联了。<br>        b、直接修改后台——根据输入条件，先查出符合条件的供应商，并把相关记录保存在一个临时表里头，然后再用临时表去做复杂关联</p>
+<h3 id="2-索引问题"><a href="#2-索引问题" class="headerlink" title="2.索引问题"></a><strong>2.索引问题</strong></h3><pre><code>在做性能跟踪分析过程中，经常发现有不少后台程序的性能问题是因为缺少合适索引造成的，有些表甚至一个索引都没有。这种情况往往都是因为在设计表时，没去定义索引，而开发初期，由于表记录很少，索引创建与否，可能对性能没啥影响，开发人员因此也未多加重视。然一旦程序发布到生产环境，随着时间的推移，表记录越来越多，这时缺少索引，对性能的影响便会越来越大了。  
+这个问题需要数据库设计人员和开发人员共同关注
+</code></pre><p>法则：不要在建立的索引的数据列上进行下列操作:<br>避免对索引字段进行计算操作<br>避免在索引字段上使用not，&lt;&gt;，!=<br>避免在索引列上使用IS NULL和IS NOT NULL<br>避免在索引列上出现数据类型转换<br>避免在索引字段上使用函数<br>避免建立索引的列中使用空值。</p>
+<h3 id="3-复杂操作"><a href="#3-复杂操作" class="headerlink" title="3.复杂操作"></a>3.复杂操作</h3><p>部分UPDATE、SELECT 语句 写得很复杂（经常嵌套多级子查询）——可以考虑适当拆成几步，先生成一些临时数据表，再进行关联操作</p>
+<h3 id="4-update"><a href="#4-update" class="headerlink" title="4.update"></a><strong>4.update</strong></h3><p>同一个表的修改在一个过程里出现好几十次，如：<br>                update table1<br>                set col1=…<br>                where col2=…;  </p>
+<pre><code>        update table1  
+        set col1=...  
+        where col2=...  
+        ......
+
+象这类脚本其实可以很简单就整合在一个UPDATE语句来完成（前些时候在协助xxx项目做性能问题分析时就发现存在这种情况）
+</code></pre><h3 id="5-在可以使用UNION-ALL的语句里，使用了UNION"><a href="#5-在可以使用UNION-ALL的语句里，使用了UNION" class="headerlink" title="5.在可以使用UNION ALL的语句里，使用了UNION"></a><strong>5.在可以使用UNION ALL的语句里，使用了UNION</strong></h3><p>UNION 因为会将各查询子集的记录做比较，故比起UNION ALL ，通常速度都会慢上许多。一般来说，如果使用UNION ALL能满足要求的话，<br>                务必使用UNION ALL。还有一种情况大家可能会忽略掉，就是虽然要求几个子集的并集需要过滤掉重复记录，但由于脚本的特殊性，不可能存在重复记录，这时便应该使用UNION ALL，如xx模块的某个查询程序就曾经存在这种情况，见，由于语句的特殊性，在这个脚本<br>                中几个子集的记录绝对不可能重复，故可以改用UNION ALL）</p>
+<h3 id="6-在WHERE-语句中，尽量避免对索引字段进行计算操作"><a href="#6-在WHERE-语句中，尽量避免对索引字段进行计算操作" class="headerlink" title="6.在WHERE 语句中，尽量避免对索引字段进行计算操作"></a><strong>6.在WHERE 语句中，尽量避免对索引字段进行计算操作</strong></h3><pre><code>这个常识相信绝大部分开发人员都应该知道，但仍有不少人这么使用，我想其中一个最主要的原因可能是为了编写方便吧，但如果仅为了编  
+写简单而损害了性能，那就不可取了
+
+9月份在对XX系统做性能分析时发现，有大量的后台程序存在类似用法，如：
+
+......  
+where trunc(create_date)=trunc(:date1)  
+虽然已对create_date 字段建了索引，但由于加了TRUNC，使得索引无法用上。此处正确的写法应该是  
+where create\_date&gt;=trunc(:date1) and create\_date&lt;trunc(:date1)+1  
+或者是  
+where create_date between trunc(:date1) and trunc(:date1)+1-1/(24\*60\*60)  
+注意：因between 的范围是个闭区间（greater than or equal to low value and less than or equal to high value.），  
+故严格意义上应该再减去一个趋于0的小数，这里暂且设置成减去1秒（1/(24\*60\*60)），如果不要求这么精确的话，可以略掉这步
+</code></pre><h3 id="7-对Where-语句的法则"><a href="#7-对Where-语句的法则" class="headerlink" title="7.对Where 语句的法则"></a>7.对Where 语句的法则</h3><p>7.1 避免在WHERE子句中使用in，not  in，or 或者having。<br><strong>可以使用 exist 和not exist代替 in和not in。<br>可以使用表链接代替 exist。<br>Having可以用where代替，如果无法代替可以分两步处理。<br>例子<br>SELECT <em>  FROM ORDERS WHERE CUSTOMER_NAME NOT IN<br>                    (SELECT CUSTOMER_NAME FROM CUSTOMER)<br>优化<br>SELECT </em>  FROM ORDERS WHERE CUSTOMER_NAME not exist<br>                    (SELECT CUSTOMER_NAME FROM CUSTOMER)  
+</strong>7.2 不要以字符格式声明数字，要以数字格式声明字符值。（日期同样）<br>**否则会使索引无效，产生全表扫描。<br>例子<br>使用：SELECT emp.ename, emp.job FROM emp WHERE emp.empno = 7369;<br>不要使用：SELECT emp.ename, emp.job FROM emp WHERE emp.empno = ‘7369’</p>
+<p><strong>7.3 WHERE后面的条件顺序影响</strong></p>
+<p> Oracle从下到上处理Where子句中多个查询条件，所以表连接语句应写在其他Where条件前，可以过滤掉最大数量记录的条件必须写在Where子句的末尾。  </p>
+<pre><code>   WHERE子句后面的条件顺序对大数据量表的查询会产生直接的影响，如  
+
+Select * from zl\_yhjbqk where dy\_dj = &apos;1KV以下&apos; and xh_bz=1  
+
+Select * from zl\_yhjbqk where xh\_bz=1  and dy_dj = &apos;1KV以下&apos;  
+
+以上两个SQL中dy\_dj（电压等级）及xh\_bz（销户标志）两个字段都没进行索引，所以执行的时候都是全表扫描，第一条SQL的dy\_dj = &apos;1KV以下&apos;条件在记录集内比率为99%，而xh\_bz=1的比率只为0.5%，在进行第一条SQL的时候99%条记录都进行dy\_dj及xh\_bz的比较，而在进行第二条SQL的时候0.5%条记录都进行dy\_dj及xh\_bz的比较，以此可以得出第二条SQL的CPU占用率明显比第一条低。
+</code></pre><h3 id="8-对Select语句的法则"><a href="#8-对Select语句的法则" class="headerlink" title="8.对Select语句的法则"></a><strong>8.对Select语句的法则</strong></h3><p>在应用程序、包和过程中限制使用select * from table这种方式。</p>
+<p>例子<br>使用<br>SELECT empno,ename,category FROM emp WHERE empno = ‘7369‘<br>而不要使用<br>SELECT * FROM emp WHERE empno = ‘7369’</p>
+<h3 id="9-排序"><a href="#9-排序" class="headerlink" title="9. 排序"></a><strong>9. 排序</strong></h3><p>避免使用耗费资源的操作<br>带有DISTINCT,UNION,MINUS,INTERSECT,ORDER BY的SQL语句会启动SQL引擎 执行，耗费资源的排序(SORT)功能. DISTINCT需要一次排序操作, 而其他的至少需要执行两次排序</p>
+<h3 id="10-临时表"><a href="#10-临时表" class="headerlink" title="10.临时表"></a><strong>10.临时表</strong></h3><p>慎重使用临时表可以极大的提高系统性能</p>
+<h3 id="11-ORDER-BY"><a href="#11-ORDER-BY" class="headerlink" title=" 11.ORDER BY"></a><strong> 11.ORDER BY</strong></h3><p>ORDER BY 子句只在两种严格的条件下使用索引.<br>ORDER BY中所有的列必须包含在相同的索引中并保持在索引中的排列顺序.<br>ORDER BY中所有的列必须定义为非空.</p>
+<h3 id="12-SQL书写的影响（共享SQL语句可以提高操作效率）"><a href="#12-SQL书写的影响（共享SQL语句可以提高操作效率）" class="headerlink" title="12.SQL书写的影响（共享SQL语句可以提高操作效率）"></a><strong>12.SQL书写的影响（共享SQL语句可以提高操作效率）</strong></h3><pre><code>同一功能同一性能不同写法SQL的影响  
+
+如一个SQL在A程序员写的为  
+Select * from zl_yhjbqk  
+
+B程序员写的为  
+Select * from dlyx.zl_yhjbqk（带表所有者的前缀）  
+
+C程序员写的为  
+Select * from DLYX.ZLYHJBQK（大写表名）  
+
+D程序员写的为  
+Select *  from DLYX.ZLYHJBQK（中间多了空格）  
+
+ 以上四个SQL在ORACLE分析整理之后产生的结果及执行的时间是一样的，但是从ORACLE共享内存SGA的原理，可以得出ORACLE对每个SQL 都会对其进行一次分析，并且占用共享内存，如果将SQL的字符串及格式写得完全相同则ORACLE只会分析一次，共享内存也只会留下一次的分析结果，这不仅可以减少分析SQL的时间，而且可以减少共享内存重复的信息，ORACLE也可以准确统计SQL的执行频率。  
+
+推荐方案：不同区域出现的相同的Sql语句，要保证查询字符完全相同，以利用SGA共享池，防止相同的Sql语句被多次分析。
+</code></pre><p>1.对查询进行优化，要尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</p>
+<p>2.应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：</p>
+<p>select id from t where num is null<br>最好不要给数据库留NULL，尽可能的使用 NOT NULL填充数据库.</p>
+<p>备注、描述、评论之类的可以设置为 NULL，其他的，最好不要使用NULL。</p>
+<p>不要以为 NULL 不需要空间，比如：char(100) 型，在字段建立时，空间就固定了， 不管是否插入值（NULL也包含在内），都是占用 100个字符的空间的，如果是varchar这样的变长字段， null 不占用空间。</p>
+<p>可以在num上设置默认值0，确保表中num列没有null值，然后这样查询：</p>
+<p>select id from t where num = 0</p>
+<p>3.应尽量避免在 where 子句中使用 != 或 &lt;&gt; 操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
+<p>4.应尽量避免在 where 子句中使用 or 来连接条件，如果一个字段有索引，一个字段没有索引，将导致引擎放弃使用索引而进行全表扫描，如：</p>
+<p>select id from t where num=10 or Name = ‘admin’<br>可以这样查询：</p>
+<p>select id from t where num = 10<br>union all<br>select id from t where Name = ‘admin’</p>
+<p>5.in 和 not in 也要慎用，否则会导致全表扫描，如：</p>
+<p>select id from t where num in(1,2,3)<br>对于连续的数值，能用 between 就不要用 in 了：</p>
+<p>select id from t where num between 1 and 3<br>很多时候用 exists 代替 in 是一个好的选择：</p>
+<p>select num from a where num in(select num from b)<br>用下面的语句替换：</p>
+<p>select num from a where exists(select 1 from b where num=a.num)</p>
+<p>6.下面的查询也将导致全表扫描：</p>
+<p>select id from t where name like ‘%abc%’<br>若要提高效率，可以考虑全文检索。</p>
+<p>7.如果在 where 子句中使用参数，也会导致全表扫描。因为SQL只有在运行时才会解析局部变量，但优化程序不能将访问计划的选择推迟到运行时；它必须在编译时进行选择。然 而，如果在编译时建立访问计划，变量的值还是未知的，因而无法作为索引选择的输入项。如下面语句将进行全表扫描：</p>
+<p>select id from t where num = @num<br>可以改为强制查询使用索引：</p>
+<p>select id from t with(index(索引名)) where num = @num<br>.应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
+<p>select id from t where num/2 = 100<br>应改为:</p>
+<p>select id from t where num = 100*2</p>
+<p>9.应尽量避免在where子句中对字段进行函数操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
+<p>select id from t where substring(name,1,3) = ’abc’       -–name以abc开头的id<br>select id from t where datediff(day,createdate,’2005-11-30′) = 0    -–‘2005-11-30’    –生成的id<br>应改为:</p>
+<p>select id from t where name like ‘abc%’<br>select id from t where createdate &gt;= ‘2005-11-30’ and createdate &lt; ‘2005-12-1’</p>
+<p>10.不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算，否则系统将可能无法正确使用索引。</p>
+<p>11.在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。</p>
+<p>12.不要写一些没有意义的查询，如需要生成一个空表结构：</p>
+<p>select col1,col2 into #t from t where 1=0<br>这类代码不会返回任何结果集，但是会消耗系统资源的，应改成这样：<br>create table #t(…)</p>
+<p>13.Update 语句，如果只更改1、2个字段，不要Update全部字段，否则频繁调用会引起明显的性能消耗，同时带来大量日志。</p>
+<p>14.对于多张大数据量（这里几百条就算大了）的表JOIN，要先分页再JOIN，否则逻辑读会很高，性能很差。</p>
+<p>15.select count(*) from table；这样不带任何条件的count会引起全表扫描，并且没有任何业务意义，是一定要杜绝的。</p>
+<p>16.索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率，因为 insert 或 update 时有可能会重建索引，所以怎样建索引需要慎重考虑，视具体情况而定。一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有 必要。</p>
+<p>17.应尽可能的避免更新 clustered 索引数据列，因为 clustered 索引数据列的顺序就是表记录的物理存储顺序，一旦该列值改变将导致整个表记录的顺序的调整，会耗费相当大的资源。若应用系统需要频繁更新 clustered 索引数据列，那么需要考虑是否应将该索引建为 clustered 索引。</p>
+<p>18.尽量使用数字型字段，若只含数值信息的字段尽量不要设计为字符型，这会降低查询和连接的性能，并会增加存储开销。这是因为引擎在处理查询和连 接时会逐个比较字符串中每一个字符，而对于数字型而言只需要比较一次就够了。</p>
+<p>19.尽可能的使用 varchar/nvarchar 代替 char/nchar ，因为首先变长字段存储空间小，可以节省存储空间，其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。</p>
+<p>20.任何地方都不要使用 select <em> from t ，用具体的字段列表代替“</em>”，不要返回用不到的任何字段。</p>
+<p>21.尽量使用表变量来代替临时表。如果表变量包含大量数据，请注意索引非常有限（只有主键索引）。</p>
+<ol start="22">
+<li>避免频繁创建和删除临时表，以减少系统表资源的消耗。临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件， 最好使用导出表。</li>
+</ol>
+<p>23.在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，以提高速度；如果数据量不大，为了缓和系统表的资源，应先create table，然后insert。</p>
+<p>24.如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样可以避免系统表的较长时间锁定。</p>
+<p>25.尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万行，那么就应该考虑改写。</p>
+<p>26.使用基于游标的方法或临时表方法之前，应先寻找基于集的解决方案来解决问题，基于集的方法通常更有效。</p>
+<p>27.与临时表一样，游标并不是不可使用。对小型数据集使用 FAST_FORWARD 游标通常要优于其他逐行处理方法，尤其是在必须引用几个表才能获得所需的数据时。在结果集中包括“合计”的例程通常要比使用游标执行的速度快。如果开发时 间允许，基于游标的方法和基于集的方法都可以尝试一下，看哪一种方法的效果更好。</p>
+<p>28.在所有的存储过程和触发器的开始处设置 SET NOCOUNT ON ，在结束时设置 SET NOCOUNT OFF 。无需在执行存储过程和触发器的每个语句后向客户端发送 DONE_IN_PROC 消息。</p>
+<p>29.尽量避免大事务操作，提高系统并发能力。</p>
+<p>30.尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。</p>
+<p>实际案例分析：拆分大的 DELETE 或INSERT 语句，批量提交SQL语句<br>　　如果你需要在一个在线的网站上去执行一个大的 DELETE 或 INSERT 查询，你需要非常小心，要避免你的操作让你的整个网站停止相应。因为这两个操作是会锁表的，表一锁住了，别的操作都进不来了。<br>　　Apache 会有很多的子进程或线程。所以，其工作起来相当有效率，而我们的服务器也不希望有太多的子进程，线程和数据库链接，这是极大的占服务器资源的事情，尤其是内存。<br>　　如果你把你的表锁上一段时间，比如30秒钟，那么对于一个有很高访问量的站点来说，这30秒所积累的访问进程/线程，数据库链接，打开的文件数，可能不仅仅会让你的WEB服务崩溃，还可能会让你的整台服务器马上挂了。<br>　　所以，如果你有一个大的处理，你一定把其拆分，使用 LIMIT oracle(rownum),sqlserver(top)条件是一个好的方法。下面是一个mysql示例：</p>
+<p>复制代码<br>while(1){</p>
+<p> 　　//每次只做1000条</p>
+<p>　　 mysql_query(“delete from logs where log_date &lt;= ’2012-11-01’ limit 1000”);</p>
+<p> 　　if(mysql_affected_rows() == 0){</p>
+<p>　　 　　//删除完成，退出！<br>　　 　　break；<br>　　}</p>
+<p>//每次暂停一段时间，释放表让其他进程/线程访问。<br>usleep(50000)</p>
+<p>}</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/07/04/索引以及索引的数据结构/">
+        <span class="nav-arrow">← </span>
+        
+          索引以及索引的数据结构
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/07/04/二叉树遍历（前序、后序、中序）/">
+        
+          二叉树遍历（前序、后序、中序）
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">目录</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-查询的模糊匹配"><span class="toc-nav-text">1.查询的模糊匹配</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-索引问题"><span class="toc-nav-text">2.索引问题</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-复杂操作"><span class="toc-nav-text">3.复杂操作</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-update"><span class="toc-nav-text">4.update</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-在可以使用UNION-ALL的语句里，使用了UNION"><span class="toc-nav-text">5.在可以使用UNION ALL的语句里，使用了UNION</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-在WHERE-语句中，尽量避免对索引字段进行计算操作"><span class="toc-nav-text">6.在WHERE 语句中，尽量避免对索引字段进行计算操作</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-对Where-语句的法则"><span class="toc-nav-text">7.对Where 语句的法则</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-对Select语句的法则"><span class="toc-nav-text">8.对Select语句的法则</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#9-排序"><span class="toc-nav-text">9. 排序</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#10-临时表"><span class="toc-nav-text">10.临时表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-ORDER-BY"><span class="toc-nav-text"> 11.ORDER BY</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-SQL书写的影响（共享SQL语句可以提高操作效率）"><span class="toc-nav-text">12.SQL书写的影响（共享SQL语句可以提高操作效率）</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/2018/07/04/SQL性能优化/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "SQL性能优化",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="#">Void</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'false';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
